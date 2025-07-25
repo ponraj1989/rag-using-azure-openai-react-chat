@@ -1,0 +1,126 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Search/searchServices",
+      "apiVersion": "2020-06-30",
+      "name": "[parameters('searchServiceName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "properties": {
+        "hostingMode": "Default",
+        "partitionCount": "[parameters('partitionCount')]",
+        "replicaCount": "[parameters('replicaCount')]"
+      }
+    },
+    {
+      "type": "Microsoft.Search/searchServices/indexes",
+      "apiVersion": "2020-06-30",
+      "name": "[concat(parameters('searchServiceName'), '/', parameters('indexName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Search/searchServices', parameters('searchServiceName'))]"
+      ],
+      "properties": {
+        "fields": [
+          {
+            "name": "content",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": false,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "retrievable": true
+          },
+          {
+            "name": "embedding",
+            "type": "Collection(Edm.Single)",
+            "searchable": false,
+            "filterable": false,
+            "sortable": false,
+            "facetable": false,
+            "key": false,
+            "retrievable": true
+          },
+          {
+            "name": "filename",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "retrievable": true
+          },
+          {
+            "name": "turbine_name",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "retrievable": true
+          },
+          {
+            "name": "model",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "retrievable": true
+          },
+          {
+            "name": "location",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "retrievable": true
+          },
+          {
+            "name": "maintenance_type",
+            "type": "Edm.String",
+            "searchable": true,
+            "filterable": true,
+            "sortable": true,
+            "facetable": false,
+            "key": false,
+            "retrievable": true
+          }
+        ]
+      }
+    }
+  ],
+  "parameters": {
+    "searchServiceName": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "skuName": {
+      "type": "string"
+    },
+    "skuCapacity": {
+      "type": "int"
+    },
+    "partitionCount": {
+      "type": "int"
+    },
+    "replicaCount": {
+      "type": "int"
+    },
+    "indexName": {
+      "type": "string"
+    }
+  }
+}

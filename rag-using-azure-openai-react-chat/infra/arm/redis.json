@@ -1,0 +1,63 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Cache/Redis",
+      "apiVersion": "2021-06-01",
+      "name": "[parameters('redisName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "[parameters('skuName')]",
+        "family": "P",
+        "capacity": "[parameters('skuCapacity')]"
+      },
+      "enableNonSslPort": true,
+      "redisConfiguration": {
+        "maxclients": "1000",
+        "maxmemory-policy": "allkeys-lru"
+      },
+      "tags": {
+        "environment": "[parameters('environment')]"
+      },
+      "properties": {
+        "enableAuth": true
+      }
+    }
+  ],
+  "parameters": {
+    "redisName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Redis cache."
+      }
+    },
+    "location": {
+      "type": "string",
+      "metadata": {
+        "description": "The location where the Redis cache will be created."
+      }
+    },
+    "skuName": {
+      "type": "string",
+      "defaultValue": "Standard",
+      "metadata": {
+        "description": "The SKU name for the Redis cache."
+      }
+    },
+    "skuCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "metadata": {
+        "description": "The capacity of the Redis cache."
+      }
+    },
+    "environment": {
+      "type": "string",
+      "defaultValue": "development",
+      "metadata": {
+        "description": "The environment for the Redis cache."
+      }
+    }
+  }
+}

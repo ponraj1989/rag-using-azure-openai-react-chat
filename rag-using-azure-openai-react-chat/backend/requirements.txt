@@ -1,0 +1,11 @@
+fastapi
+azure-functions
+azure-cognitivesearch
+azure-ai-formrecognizer
+redis
+python-dotenv
+pydantic
+uvicorn
+httpx
+numpy
+scikit-learn

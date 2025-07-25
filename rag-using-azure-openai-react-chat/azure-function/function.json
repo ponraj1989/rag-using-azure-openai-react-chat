@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "type": "blobTrigger",
+      "direction": "in",
+      "name": "myBlob",
+      "path": "documents/{name}",
+      "connection": "AzureWebJobsStorage"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "req",
+      "route": null
+    }
+  ],
+  "disabled": false,
+  "scriptFile": "__init__.py"
+}
